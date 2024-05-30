@@ -1,48 +1,37 @@
-function validateType(variable, type) {
-  return (typeof variable === type);
-}
+/* eslint-disable no-underscore-dangle */
 export default class HolbertonClass {
+  /**
+   * @param {number} size - no of students in class
+   * @param {string} location - location of class
+   */
   constructor(size, location) {
-    if (!validateType(size, 'number')) {
-      throw new TypeError('size must be a string');
-    }
-    if (!validateType(location, 'string')) {
-      throw new TypeError('location must be a string');
-    }
-
-    this._size = size;
-    this._location = location;
+    this.size = size;
+    this.location = location;
   }
 
-  /* define getter for the object's props */
   get size() {
     return this._size;
+  }
+
+  set size(value) {
+    this._size = value;
   }
 
   get location() {
     return this._location;
   }
 
-  /* define setters for the object's props */
-  set size(newSize) {
-    if (!validateType(newSize, 'number')) {
-      throw new TypeError('size should  be a number');
+  set location(value) {
+    this._location = value;
+  }
+
+  [Symbol.toPrimitive](hint) {
+    if (hint === 'number') {
+      return this.size;
     }
-    this._size = newSize;
-  }
-
-  set location(newLocation) {
-    if (!validateType(newLocation, 'string')) {
-      throw new TypeError('location should be a string');
+    if (hint === 'string') {
+      return this.location;
     }
-    this._location = newLocation;
-  }
-
-  valueOf() {
-    return this._size;
-  }
-
-  toString() {
-    return this._location;
+    return this;
   }
 }
